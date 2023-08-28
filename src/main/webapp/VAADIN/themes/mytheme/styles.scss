@@ -1,0 +1,41 @@
+@import "../valo/valo";
+@import "addons.scss";
+
+// This file prefixes all rules with the theme name to avoid causing conflicts with other themes.
+// The actual styles should be defined in mytheme.scss
+
+.mytheme {
+  @include addons;
+  @include valo;
+
+	
+}
+
+	.gray {
+		background: lightgray;
+	}
+	
+	.flexbox  { 
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.flexgrow1 {
+		flex-grow: 1;
+	}
+	
+	.flexgrow2 {
+		flex-grow: 2;
+	}
+	
+	.flexbasis50 {
+		flex-basis: 50%;
+	}
+	
+	.gray {
+		background: lightgray;
+	}
+	
+	.paddingall {
+		padding: 37px;
+	}
