@@ -2,9 +2,11 @@ package org.test;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+@SpringView(name="ssologout")
 public class LogoutView extends VerticalLayout implements View {
 
     @Override

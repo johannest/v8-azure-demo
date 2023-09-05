@@ -1,6 +1,7 @@
 package org.test;
 
 import com.vaadin.navigator.View;
+import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
@@ -8,6 +9,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+@SpringView(name = "")
 public class MainView extends VerticalLayout implements View {
 
     public MainView() {
