@@ -1,17 +1,27 @@
 package org.test;
 
-import com.vaadin.server.*;
-import com.vaadin.spring.server.SpringVaadinServlet;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.handler.MappedInterceptor;
+
+import com.vaadin.server.ServiceException;
+import com.vaadin.server.SessionDestroyEvent;
+import com.vaadin.server.SessionDestroyListener;
+import com.vaadin.server.SessionInitEvent;
+import com.vaadin.server.SessionInitListener;
+import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.WrappedSession;
+import com.vaadin.spring.server.SpringVaadinServlet;
 
 @Configuration
 public class ApplicationConfiguration implements SessionInitListener, SessionDestroyListener {
@@ -22,6 +32,9 @@ public class ApplicationConfiguration implements SessionInitListener, SessionDes
     @Value("${spring.cloud.azure.active-directory.credential.client-id}")
     private String clientId;
 
+    @Autowired
+	private CustomInterceptor customInterceptor;
+    
     @Bean
     VaadinServlet vaadinServlet() {
         VaadinServlet servlet = new SpringVaadinServlet() {
@@ -62,4 +75,11 @@ public class ApplicationConfiguration implements SessionInitListener, SessionDes
     public void sessionDestroy(SessionDestroyEvent event) {
         System.out.println("%%% Session destroyed: " + ((event.getSession() != null && event.getSession().getSession() != null) ? event.getSession().getSession().getId() : "null"));
     }
+
+	@Bean
+	public MappedInterceptor myInterceptor() {
+		String excludedPatterns[] = { "/ssologout" };
+		MappedInterceptor intercepror = new MappedInterceptor(null, excludedPatterns, customInterceptor);
+		return intercepror;
+	}
 }
